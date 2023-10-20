@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class CardGame {
     public static void main(String [] args) {
 
@@ -89,6 +90,78 @@ public class CardGame {
             System.out.println(deck[i] + " is the " + rank + " of " + suit);
 
         }
+
+        //user has a hand of 7 cards drawn from the top of the deck
+        int [] hand = new int[7];
+
+        //top is used as index to represent the next card in the deck
+        //that hasn't been drawn yet
+        //-increment top after every card draw
+        int top = 0;
+
+        for (int i = 0; i < 7; i++) {
+            //add the top card to the hand
+            hand[i] = deck[top];
+            top++;
+        }
+
+        System.out.println();
+        Scanner s = new Scanner(System.in);
+
+
+        boolean fourOfKind = false;
+        while (top < 52 && fourOfKind == false) {
+
+            //print cards in hand
+            System.out.println("your hand: ");
+            for (int i = 0; i < 7; i++) {
+                suitI = hand[i] / 13;
+                rankI = hand[i] % 13;
+                System.out.println(i + " - " + ranks[rankI] + " of " + suits[suitI]);
+            }
+
+            //keep asking the user for the index of the card they want to replace with
+            System.out.println("what index would you like to get a new card for?");
+            int index = s.nextInt();
+
+            //a new card from deck.
+            int newCard = deck[top];
+            top++;
+
+            hand[index] = newCard;
+
+            //-continue this until the user has 4 of a kind (same rank) OR there are no more
+            //cards in the deck
+
+            //two loops - for every card, check for other cards in the hand w the same rank
+            for (int i = 0; i < 7; i++) {
+
+                rankI = hand[i] % 13;
+                int countSameRank = 0;
+
+                for(int j = 0; j < 7; j++) {
+                    int rankJ = hand[j] % 13;
+                    if (rankI == rankJ) {
+                        countSameRank++;
+                    }
+                }
+
+                if(countSameRank == 4) {
+                    fourOfKind = true;
+                }
+            }
+
+        }
+
+
+        //print cards in hand
+        System.out.println("your hand: ");
+        for (int i = 0; i < 7; i++) {
+            suitI = hand[i] / 13;
+            rankI = hand[i] % 13;
+            System.out.println(i + " - " + ranks[rankI] + " of " + suits[suitI]);
+        }
+
 
     }
 }
